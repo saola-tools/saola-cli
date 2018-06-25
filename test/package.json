@@ -1,0 +1,16 @@
+{
+  "name": "devebot-cli-test",
+  "version": "0.0.0",
+  "description": "Devebot Commandline Interface Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pnhung177",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0",
+    "sinon": "^4.3.0"
+  }
+}
