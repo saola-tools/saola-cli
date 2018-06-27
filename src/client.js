@@ -66,10 +66,12 @@ module.exports = function(params) {
 
   var init = Promise.promisify(adapter.loadDefinition, { context: adapter });
   init().then(function(clidef) {
-    tui.displayCliHeader(clidef);
-    return run(adapter, clidef);
-  }).then(function() {
-    tui.displayCliFooter(clidef);
+    return Promise.resolve().then(function() {
+      tui.displayCliHeader(clidef);
+      return run(adapter, clidef);
+    }).then(function() {
+      tui.displayCliFooter(clidef);
+    });
   }).catch(function(exception) {
     tui.displayException(exception);
   });

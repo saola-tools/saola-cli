@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/devebot/devebot-cli#readme",
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "bluebird": "^3.4.0",
     "cli-table2": "^0.2.0",
     "commander": "^2.9.0",
