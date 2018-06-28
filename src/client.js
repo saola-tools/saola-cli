@@ -65,7 +65,8 @@ module.exports = function(params) {
   });
 
   var init = Promise.promisify(adapter.loadDefinition, { context: adapter });
-  init().then(function(clidef) {
+  init().then(function(obj) {
+    let clidef = obj && obj.payload || {};
     return Promise.resolve().then(function() {
       tui.displayCliHeader(clidef);
       return run(adapter, clidef);

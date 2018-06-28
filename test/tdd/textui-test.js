@@ -18,7 +18,7 @@ describe('devebot-cli:textui:displayCliOutput', function() {
     var unhook = stdInterceptor({trim:false});
     textui.displayCliOutput({
       state: 'completed',
-      details: [
+      payload: [
         {
           "title": "Grid data format Example",
           "type": "grid",
@@ -57,7 +57,7 @@ describe('devebot-cli:textui:displayCliOutput', function() {
     var unhook = stdInterceptor({trim:false});
     textui.displayCliOutput({
       state: 'failed',
-      details: [
+      payload: [
         {
           "title": "Sequence descriptors",
           "type": "json",

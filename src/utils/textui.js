@@ -65,7 +65,7 @@ function TextUI(params) {
     } else {
       var options = {};
       options.isError = (output.state == 'failed');
-      var info = output.details || [];
+      var info = output.payload || [];
       if (!lodash.isArray(info)) info = [info];
       info.forEach(function(infoItem) {
         renderBlock(infoItem, options);
