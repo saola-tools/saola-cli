@@ -11,6 +11,8 @@ var TextUI = require('../lib/utils/textui');
 var Myperf = require('../lib/utils/myperf');
 var logger = require('../lib/utils/logger');
 
+const SPECIAL_ARGS = ['package', 'payload'];
+
 module.exports = function(params) {
   params = params || {};
 
@@ -87,27 +89,42 @@ var run = function(adapter, clidef) {
 
     for(var i=0; i<commands.length; i++) {
       var command = commands[i];
-      
+      var optionNames = [];
+
       var cmddef = program.command(command.name).description(command.description);
       
+      if (command.package) {
+        cmddef = cmddef.option('--package [string]', 'Package name');
+        optionNames.push('package');
+      }
+
       var options = command.options || [];
       for(var k=0; k<options.length; k++) {
         var option = options[k];
         cmddef = cmddef.option(util.format('-%s --%s %s', 
             option.abbr, option.name, option.required?'<value>':'[value]'), 
             option.description);
+        optionNames.push(option.name);
       }
-      
-      var optionNames = lodash.map(options, function(option) {
-        return option.name;
-      });
-      
+
+      if (lodash.isObject(command.schema)) {
+        cmddef = cmddef.option('--payload [json]', 'Data (in JSON format)');
+        optionNames.push('payload');
+      }
+
       cmddef = cmddef.action((function(command, optionNames) {
         return function(values) {
-          adapter.execCommand({
+          let cmdObject = {
             name: command.name,
-            options: lodash.pick(values, optionNames)
-          }, callback);
+            options: lodash.omit(lodash.pick(values, optionNames), SPECIAL_ARGS)
+          };
+          if (optionNames && optionNames.indexOf('package') >= 0) {
+            cmdObject['package'] = values['package'];
+          }
+          if (optionNames && optionNames.indexOf('payload') >= 0) {
+            cmdObject['payload'] = JSON.parse(values['payload']);
+          }
+          adapter.execCommand(cmdObject, callback);
         };
       })(command, optionNames));
     }

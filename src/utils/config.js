@@ -52,7 +52,9 @@ function HomeConfig(params) {
       configData = JSON.parse(fs.readFileSync(configFile, 'utf8'));
     } catch (err) {
       if (err.code == 'ENOENT') {
-        fs.writeFileSync(configFile, JSON.stringify(configData, null, 2), 'utf8');
+        if (params.configFileInitialized) {
+          fs.writeFileSync(configFile, JSON.stringify(configData, null, 2), 'utf8');
+        }
       }
     }
     return configData;
