@@ -1,24 +1,22 @@
 'use strict';
 
-var Promise = require('bluebird');
-var lodash = require('lodash');
-var util = require('util');
-var program = require('commander');
-var DevebotApi = require('devebot-api');
+const Promise = require('bluebird');
+const lodash = require('lodash');
+const util = require('util');
+const program = require('commander');
+const DevebotApi = require('devebot-api');
 
-var Config = require('../lib/utils/config');
-var TextUI = require('../lib/utils/textui');
-var Myperf = require('../lib/utils/myperf');
-var logger = require('../lib/utils/logger');
+const Config = require('../lib/utils/config');
+const TextUI = require('../lib/utils/textui');
+const Myperf = require('../lib/utils/myperf');
+const logger = require('../lib/utils/logger');
 
 const SPECIAL_ARGS = ['package', 'payload'];
 
-module.exports = function(params) {
-  params = params || {};
-
-  var adapter = params.adapter;
-  var listener = params.listener;
-  var tui;
+module.exports = function(params = {}) {
+  let adapter = params.adapter;
+  let listener = params.listener;
+  let tui;
 
   if (lodash.isObject(adapter)) {
     tui = new TextUI();

@@ -1,7 +1,8 @@
+/doc
+/lib
 node_modules
+package-lock.json
 .cache
 .store
 .idea
-/doc
-/lib
 *.log
