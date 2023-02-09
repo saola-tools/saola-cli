@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-var constx = {
+const constx = {
   argumentSchema: {
     "type": "object",
     "oneOf": [{

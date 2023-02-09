@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var winston = require('winston');
+const winston = require("winston");
 
-var DEBUG = process.env.NODE_DEVEBOT_DEBUG || process.env.NODE_DEBUG || 'error';
+const DEBUG = process.env.NODE_DEVEBOT_DEBUG || process.env.NODE_DEBUG || "error";
 
-var acegikLevels = {
+const acegikLevels = {
   levels: {
     debug: 4,
     info: 3,
@@ -13,15 +13,15 @@ var acegikLevels = {
     error: 0
   },
   colors: {
-    debug: 'blue',
-    info: 'green',
-    trace: 'yellow',
-    warn: 'cyan',
-    error: 'red'
+    debug: "blue",
+    info: "green",
+    trace: "yellow",
+    warn: "cyan",
+    error: "red"
   }
 };
 
-var logger = new(winston.Logger)({
+const logger = new(winston.Logger)({
     levels: acegikLevels.levels,
     colors: acegikLevels.colors,
     transports: [

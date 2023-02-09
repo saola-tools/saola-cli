@@ -22,34 +22,35 @@ describe('devebot-cli:textui:displayCliOutput', function() {
         {
           "title": "Grid data format Example",
           "type": "grid",
-          "data": {
+          "label": {
+            "objValue": "Value",
+            "intValue": "Integer",
+            "boolValue": "Boolean"
+          },
+          "data": [{
             "objValue": {
               "greeting": "Hello world",
               "PI": 3.14159
             },
             "intValue": 1024,
             "boolValue": true
-          }
+          }]
         }
       ]
     });
     var output = unhook();
     var expected = [
-      '\n',
-      '[x] Sequence descriptors\n',
-      '┌──────────────────────────────────────────────────────────────────────────────┐\n' +
-      '│ JSON                                                                         │\n' +
-      '├──────────────────────────────────────────────────────────────────────────────┤\n' +
-      '│ {                                                                            │\n' +
-      '│   "objValue": {                                                              │\n' +
-      '│     "greeting": "Hello world",                                               │\n' +
-      '│     "PI": 3.14159                                                            │\n' +
-      '│   },                                                                         │\n' +
-      '│   "intValue": 1024,                                                          │\n' +
-      '│   "boolValue": true                                                          │\n' +
-      '│ }                                                                            │\n' +
-      '└──────────────────────────────────────────────────────────────────────────────┘\n'
+      "\n",
+      "[v] Grid data format Example\n",
+      [
+      "┌───────┬─────────┬─────────┐\n",
+      "│ Value │ Integer │ Boolean │\n",
+      "├───────┼─────────┼─────────┤\n",
+      "│       │ 1024    │ true    │\n",
+      "└───────┴─────────┴─────────┘\n"
+      ].join("")
     ]
+    false && console.info(JSON.stringify(output.stdout, null, 0));
     assert.sameOrderedMembers(output.stdout, expected)
   });
 

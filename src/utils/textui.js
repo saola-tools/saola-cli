@@ -1,102 +1,103 @@
-'use strict';
+"use strict";
 
-var lodash = require('lodash');
-var util = require('util');
-var Table = require('cli-table2');
-var Validator = require('jsonschema').Validator;
-var validator = new Validator();
+const lodash = require("lodash");
+const util = require("util");
+const Table = require("cli-table2");
+const Validator = require("jsonschema").Validator;
+const validator = new Validator();
 
-var clientInfo = require('./appinfo.js');
-var constx = require('./constx.js');
+const clientInfo = require("./appinfo.js");
+const constx = require("./constx.js");
 
-function TextUI(params) {
+function TextUI (params) {
   params = params || {};
 
-  var tableOpts = {
+  const tableOpts = {
     style: {
         head: []    //disable colors in header cells
       , border: []  //disable colors for the border
     }
-  }
+  };
 
   this.displayCliHeader = function(clidef) {
     clidef = clidef || {};
-    var serverInfo = clidef.appinfo;
-    console.log('Client[%s]: %s (v%s)', clientInfo.name, clientInfo.description, clientInfo.version);
+    const serverInfo = clidef.appinfo;
+    console.info("Client[%s]: %s (v%s)", clientInfo.name, clientInfo.description, clientInfo.version);
     if (lodash.isObject(serverInfo) && serverInfo.name != clientInfo.name) {
-      console.log('Server[%s]: %s (v%s)', serverInfo.name, serverInfo.description, serverInfo.version);
+      console.info("Server[%s]: %s (v%s)", serverInfo.name, serverInfo.description, serverInfo.version);
     }
   };
-  
+
   this.displayCliFooter = function(clidef) {
-    var cfgObj = params.config;
-    var mpfObj = params.myperf;
-    
-    var status = [];
-    
+    const cfgObj = params.config;
+    const mpfObj = params.myperf;
+
+    const status = [];
+
     if (lodash.isObject(cfgObj)) {
-      var ctx = cfgObj.getContext();
-      status.push(lodash.isEmpty(ctx) ? 'default' : ctx);
-      var cfg = cfgObj.getConfig();
+      const ctx = cfgObj.getContext();
+      status.push(lodash.isEmpty(ctx) ? "default" : ctx);
+      const cfg = cfgObj.getConfig();
       if (lodash.isObject(cfg)) {
-        status.push(util.format(' - %s://%s:%s%s', 
-          cfg.protocol || 'http', cfg.host, cfg.port, cfg.path));
+        status.push(util.format(" - %s://%s:%s%s",
+          cfg.protocol || "http", cfg.host, cfg.port, cfg.path));
       }
     }
-    
+
     if (lodash.isObject(mpfObj)) {
-      var usage = mpfObj.stop();
-      status.push('\n', util.format('Time: %s - Memory: %s', usage.time_text, usage.memory_text));
+      const usage = mpfObj.stop();
+      status.push("\n", util.format("Time: %s - Memory: %s", usage.time_text, usage.memory_text));
     }
-    
+
     [
       "",
       "------------------------------------------------------------------------------------",
-      status.join(''),
+      status.join(""),
       "",
-    ].forEach(function(str) { console.log(str); });
+    ].forEach(function(str) { console.info(str); });
   };
-  
+
   this.displayCliOutput = function(output) {
     output = output || {};
-    var valresult = validator.validate(output, constx.argumentSchema);
+    const valresult = validator.validate(output, constx.argumentSchema);
     if (valresult.errors.length > 0) {
+      console.log(JSON.stringify(valresult.errors, null, 2));
       renderInvalid(output);
     } else {
-      var options = {};
-      options.isError = (output.state == 'failed');
-      var info = output.payload || [];
+      const options = {};
+      options.isError = (output.state == "failed");
+      let info = output.payload || [];
       if (!lodash.isArray(info)) info = [info];
       info.forEach(function(infoItem) {
         renderBlock(infoItem, options);
       });
     }
   };
-  
-  var renderInvalid = function(result) {
-    var table = new Table(lodash.assign(tableOpts, {
-      head: ['Invalid output format. Render full result object in JSON format'],
+
+  const renderInvalid = function(result) {
+    const table = new Table(lodash.assign(tableOpts, {
+      head: ["Invalid output format. Render full result object in JSON format"],
       colWidths: [78]
     }));
     table.push([JSON.stringify(result, null, 2)]);
-    
-    console.log('');
-    console.log(table.toString());
+
+    console.info("");
+    console.info(table.toString());
   };
-  
-  var renderBlock = function(result, options) {
+
+  const renderBlock = function(result, options) {
     printTitle(result, options);
-    
-    switch(result.type) {
-      case 'record':
-      case 'object':
+
+    switch (result.type) {
+      case "record":
+      case "object":
         renderRecord(result);
         break;
-      case 'table':
-      case 'grid':
+      case "table":
+      case "grid":
         renderTable(result);
         break;
-      case 'json':
+      case "json":
         renderJson(result);
         break;
       default:
@@ -105,83 +106,83 @@ function TextUI(params) {
     }
   };
 
-  var renderRecord = function(result) {
-    var label = result.label;
-    var data = result.data;
-    var keys = Object.keys(data);
-    var rows = [];
+  const renderRecord = function(result) {
+    const label = result.label;
+    const data = result.data;
+    const keys = Object.keys(data);
+    const rows = [];
     keys.forEach(function(key) {
       if (label[key]){
-        var row = {};
+        const row = {};
         row[label[key]] = data[key];
         rows.push(row);
       }
     });
-  
-    var table = new Table(lodash.assign(tableOpts, {}));
+
+    const table = new Table(lodash.assign(tableOpts, {}));
     rows.forEach(function(row) {
       table.push(row);
     });
-    
-    console.log(table.toString());
+
+    console.info(table.toString());
   };
-  
-  var renderTable = function(result) {
-    var label = result.label;
-    var fields = Object.keys(label);
-    
-    var titles = [];
+
+  const renderTable = function(result) {
+    const label = result.label;
+    const fields = Object.keys(label);
+
+    const titles = [];
     fields.forEach(function(field) {
       titles.push(label[field]);
     });
-    
-    var data = result.data;
-    var rows = [];
+
+    const data = result.data;
+    const rows = [];
     data.forEach(function(object) {
-      var row = [];
-      for(var i=0; i<fields.length; i++) {
+      const row = [];
+      for (let i=0; i<fields.length; i++) {
         row.push(object[fields[i]]);
       }
       rows.push(row);
     });
-  
-    var table = new Table(lodash.assign(tableOpts, {
+
+    const table = new Table(lodash.assign(tableOpts, {
       head: titles
     }));
-  
+
     rows.forEach(function(row) {
       table.push(row);
     });
-  
-    console.log(table.toString());
+
+    console.info(table.toString());
   };
-  
-  var renderJson = function(result) {
-    var table = new Table(lodash.assign(tableOpts, {
-      head: ['JSON'], 
+
+  const renderJson = function(result) {
+    const table = new Table(lodash.assign(tableOpts, {
+      head: ["JSON"],
       colWidths: [78]
     }));
     table.push([JSON.stringify(result.data, null, 2)]);
-    console.log(table.toString());
+    console.info(table.toString());
   };
-  
-  var renderUnknown = function(result) {
-    var table = new Table(lodash.assign(tableOpts, {
-      head: ['Unknown result type'], 
+
+  const renderUnknown = function(result) {
+    const table = new Table(lodash.assign(tableOpts, {
+      head: ["Unknown result type"],
       colWidths: [78]
     }));
     table.push([JSON.stringify(result.data, null, 2)]);
-    console.log(table.toString());
+    console.info(table.toString());
   };
-  
-  var printTitle = function(result, options) {
+
+  const printTitle = function(result, options) {
     if (lodash.isString(result.title)) {
-      console.log('');
-      var sign = (options && options.isError) ? '[x]' : '[v]';
-      console.log('%s %s', sign, result.title);
+      console.info("");
+      const sign = (options && options.isError) ? "[x]" : "[v]";
+      console.info("%s %s", sign, result.title);
     }
   };
-  
+
   this.displayException = function(exception) {
     [
       "",
@@ -190,7 +191,7 @@ function TextUI(params) {
       "For more information about using this application, please see the guide:",
       "" + clientInfo.homepage,
       "",
-    ].forEach(function(str) { console.log(str); });
+    ].forEach(function(str) { console.info(str); });
   };
 }
 
