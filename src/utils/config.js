@@ -16,13 +16,13 @@ function HomeConfig (params) {
     protocol: "http",
     host: "0.0.0.0",
     port: 17779,
-    path: "/devebot",
+    path: "/-",
     authen: {
       token_key: "devebot",
       token_secret: "s3cr3tpa$$w0rd"
     },
     tunnel: {
-      enabled: true,
+      enabled: false,
       rejectUnauthorized: false
     }
   }, params.defaultConfig);

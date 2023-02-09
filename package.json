@@ -45,13 +45,13 @@
   },
   "homepage": "https://github.com/devebot/devebot-cli#readme",
   "dependencies": {
-    "app-root-path": "^2.1.0",
-    "bluebird": "^3.4.0",
+    "app-root-path": "^3.1.0",
+    "bluebird": "3.7.2",
     "cli-table2": "^0.2.0",
-    "commander": "^2.9.0",
+    "commander": "^9.5.0",
     "devebot-api": "^0.2.2",
     "jsonschema": "^1.1.0",
-    "lodash": "^4.12.0",
+    "lodash": "4.17.21",
     "userhome": "^1.0.0",
     "winston": "^2.2.0"
   },
