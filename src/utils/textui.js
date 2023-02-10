@@ -61,7 +61,7 @@ function TextUI (params) {
     output = output || {};
     const valresult = validator.validate(output, constx.argumentSchema);
     if (valresult.errors.length > 0) {
-      console.log(JSON.stringify(valresult.errors, null, 2));
+      console.info(JSON.stringify(valresult.errors, null, 2));
       renderInvalid(output);
     } else {
       const options = {};

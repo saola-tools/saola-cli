@@ -7,9 +7,7 @@ function loadPackage () {
   return JSON.parse(fs.readFileSync(path.join(__dirname, "/../../package.json"), "utf8"));
 }
 
-function injectPackageInfo (CONSTANTS) {
-  CONSTANTS = CONSTANTS || {};
-  //
+function injectPackageInfo (CONSTANTS = {}) {
   const PKG_INFO = loadPackage();
   //
   Object.assign(CONSTANTS, {
@@ -24,26 +22,22 @@ function injectPackageInfo (CONSTANTS) {
 }
 
 function getFrameworkName (packageName) {
-  const scopedNamePattern = /^@(?<scope>.+)\/(?<name>[a-zA-Z]{1}[a-zA-Z0-9-_]*)$/;
-  const match = packageName.match(scopedNamePattern);
-  if (match && match.groups) {
-    const scope = match.groups["scope"];
-    if (isString(scope)) {
-      return scope;
-    }
-  }
-  //
-  const normalNamePattern = /^(?<scope>[a-zA-Z]+)-(?<name>[a-zA-Z]{1}[a-zA-Z0-9-_]*)$/;
-  const match2 = packageName.match(normalNamePattern);
-  if (match2 && match2.groups) {
-    const scope = match2.groups["scope"];
-    if (isString(scope)) {
-      return scope;
+  const scopedNamePatterns = [
+    /^@(?<scope>.+)\/(?<name>[a-zA-Z]{1}[a-zA-Z0-9-_]*)$/,
+    /^(?<scope>[a-zA-Z]+)-(?<name>[a-zA-Z]{1}[a-zA-Z0-9-_]*)$/,
+  ];
+  for (let scopedNamePattern of scopedNamePatterns) {
+    const match = packageName.match(scopedNamePattern);
+    if (match && match.groups) {
+      const scope = match.groups["scope"];
+      if (isString(scope)) {
+        return scope;
+      }
     }
   }
   //
   return packageName;
-};
+}
 
 function isString (s) {
   return typeof s === "string";
