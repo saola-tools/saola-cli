@@ -1,11 +1,11 @@
 {
-  "name": "devebot-cli",
+  "name": "@saola/cli",
   "version": "0.4.0",
-  "description": "Devebot Commandline Interface",
+  "description": "SaolaJS Commandline Interface",
   "main": "lib/client.js",
   "preferGlobal": true,
   "bin": {
-    "devebot": "./bin/cli"
+    "saola": "./bin/cli"
   },
   "engines": {
     "node": ">=12"
@@ -34,25 +34,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devebot/devebot-cli.git"
+    "url": "git+https://github.com/saolajs/saola-cli.git"
   },
   "keywords": [
-    "devebot",
-    "cli",
-    "commandline"
+    "saola",
+    "cli"
   ],
-  "author": "devebot",
+  "author": "SaolaJS",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devebot/devebot-cli/issues"
+    "url": "https://github.com/saolajs/saola-cli/issues"
   },
-  "homepage": "https://github.com/devebot/devebot-cli#readme",
+  "homepage": "https://github.com/saolajs/saola-cli#readme",
   "dependencies": {
+    "@saola/api": "^0.4.0",
     "app-root-path": "^3.1.0",
     "bluebird": "3.7.2",
     "cli-table": "^0.3.11",
     "commander": "^9.5.0",
-    "devebot-api": "^0.4.0",
     "jsonschema": "^1.4.1",
     "lodash": "4.17.21",
     "userhome": "^1.0.0",

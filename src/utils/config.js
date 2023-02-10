@@ -5,12 +5,14 @@ const path = require("path");
 const lodash = require("lodash");
 const userhome = require("userhome");
 
+const constx = require("./constx");
+
 function HomeConfig (params) {
   params = params || {};
 
   const environmentVar = params.environmentVar || "NODE_DEVEBOT_CLI";
   const configContext = process.env[environmentVar];
-  const configSubdir = params.configSubdir || ".devebot";
+  const configSubdir = params.configSubdir || "." + constx.FRAMEWORK.NAMESPACE;
   const configFilename = params.configFilename || "config";
   const defaultConfig = lodash.merge({
     protocol: "http",
@@ -18,7 +20,7 @@ function HomeConfig (params) {
     port: 17779,
     path: "/-",
     authen: {
-      token_key: "devebot",
+      token_key: "master",
       token_secret: "s3cr3tpa$$w0rd"
     },
     tunnel: {

@@ -11,7 +11,7 @@ const Myperf = require("./utils/myperf");
 const logger = require("./utils/logger");
 const constx = require("./utils/constx");
 
-const ApiClient = require(constx.FRAMEWORK.NAMESPACE + "-api");
+const ApiClient = require("@saola/api");
 
 const SPECIAL_ARGS = ["package", "payload"];
 
