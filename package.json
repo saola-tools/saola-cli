@@ -23,7 +23,7 @@
     "build": "npm exec -- babel ./src -d ./lib",
     "check": "npm exec -- eslint src",
     "check-silent": "npm exec -- eslint --quiet src",
-    "pretest": "npm run clean && NODE_ENV=${SAOLA_NODE_ENV:-test} npm run build",
+    "pretest": "npm run clean && NODE_ENV=${DEVEBOT_NODE_ENV:-test} npm run build",
     "testOnly": "npm --prefix=test exec -- mocha --recursive ./test/tdd/*-test.js",
     "test": "npm run testOnly",
     "prepublishOnly": "npm run check-silent && npm run clean && NODE_ENV=${DEVEBOT_NODE_ENV:-production} npm run build",
@@ -47,10 +47,10 @@
   "dependencies": {
     "app-root-path": "^3.1.0",
     "bluebird": "3.7.2",
-    "cli-table2": "^0.2.0",
+    "cli-table": "^0.3.11",
     "commander": "^9.5.0",
     "devebot-api": "^0.2.2",
-    "jsonschema": "^1.1.0",
+    "jsonschema": "^1.4.1",
     "lodash": "4.17.21",
     "userhome": "^1.0.0",
     "winston": "^2.2.0"

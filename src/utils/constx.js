@@ -1,6 +1,46 @@
 "use strict";
 
-const constx = {
+const fs = require("fs");
+const path = require("path");
+
+function loadPackage () {
+  return JSON.parse(fs.readFileSync(path.join(__dirname, "/../../package.json"), "utf8"));
+}
+
+function injectPackageInfo (CONSTANTS) {
+  CONSTANTS = CONSTANTS || {};
+  //
+  const PKG_INFO = loadPackage();
+  //
+  Object.assign(CONSTANTS, {
+    FRAMEWORK: {
+      NAMESPACE: getFrameworkName(PKG_INFO.name),
+      PACKAGE_NAME: PKG_INFO.name,
+      VERSION: PKG_INFO.version,
+    }
+  });
+  //
+  return CONSTANTS;
+}
+
+function getFrameworkName (packageName) {
+  const scopedNamePattern = /^@(?<scope>.+)\/(?<name>[a-zA-Z]{1}[a-zA-Z0-9-_]*)$/;
+  const match = packageName.match(scopedNamePattern);
+  if (match && match.groups) {
+    const scope = match.groups["scope"];
+    if (isString(scope)) {
+      return scope;
+    }
+  }
+  //
+  return packageName;
+};
+
+function isString (s) {
+  return typeof s === "string";
+}
+
+const CONSTANTS = {
   argumentSchema: {
     "type": "object",
     "oneOf": [{
@@ -75,4 +115,4 @@ const constx = {
   }
 };
 
-module.exports = constx;
+module.exports = injectPackageInfo(CONSTANTS);

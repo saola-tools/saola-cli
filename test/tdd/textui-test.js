@@ -1,13 +1,12 @@
 'use strict';
 
-var lodash = require('lodash');
-var debugx = require('debug')('tdd:devebot-cli:textui');
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-var TextUI = require('../../lib/utils/textui');
-var stdInterceptor = require('../lib/std-interceptor');
+const lodash = require('lodash');
+const debugx = require('debug')('tdd:framework:cli:textui');
+const assert = require('chai').assert;
+const TextUI = require('../../lib/utils/textui');
+const stdInterceptor = require('../lib/std-interceptor');
 
-describe('devebot-cli:textui:displayCliOutput', function() {
+describe('tdd:framework:cli:textui:displayCliOutput', function() {
   var textui = new TextUI({
     options: {
       colorEnabled: false
@@ -43,11 +42,11 @@ describe('devebot-cli:textui:displayCliOutput', function() {
       "\n",
       "[v] Grid data format Example\n",
       [
-      "┌───────┬─────────┬─────────┐\n",
-      "│ Value │ Integer │ Boolean │\n",
-      "├───────┼─────────┼─────────┤\n",
-      "│       │ 1024    │ true    │\n",
-      "└───────┴─────────┴─────────┘\n"
+      "┌───────────┬─────────┬─────────┐\n",
+      "│ Value     │ Integer │ Boolean │\n",
+      "├───────────┼─────────┼─────────┤\n",
+      "│ [object … │ 1024    │ true    │\n",
+      "└───────────┴─────────┴─────────┘\n"
       ].join("")
     ]
     false && console.info(JSON.stringify(output.stdout, null, 0));

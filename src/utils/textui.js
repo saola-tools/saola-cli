@@ -2,7 +2,7 @@
 
 const lodash = require("lodash");
 const util = require("util");
-const Table = require("cli-table2");
+const Table = require("cli-table");
 const Validator = require("jsonschema").Validator;
 const validator = new Validator();
 

@@ -4,12 +4,14 @@ const Promise = require("bluebird");
 const lodash = require("lodash");
 const util = require("util");
 const program = require("commander");
-const DevebotApi = require("devebot-api");
 
 const Config = require("./utils/config");
 const TextUI = require("./utils/textui");
 const Myperf = require("./utils/myperf");
 const logger = require("./utils/logger");
+const constx = require("./utils/constx");
+
+const ApiClient = require(constx.FRAMEWORK.NAMESPACE + "-api");
 
 const SPECIAL_ARGS = ["package", "payload"];
 
@@ -23,7 +25,7 @@ module.exports = function(params = {}) {
   } else {
     const cfgObj = new Config(params);
     const cfg = cfgObj.getConfig();
-    adapter = new DevebotApi(lodash.extend(cfg, {
+    adapter = new ApiClient(lodash.extend(cfg, {
       logger: logger,
       ws: listener
     }));
