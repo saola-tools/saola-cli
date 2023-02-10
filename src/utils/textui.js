@@ -36,7 +36,7 @@ function TextUI (params) {
 
     if (lodash.isObject(cfgObj)) {
       const ctx = cfgObj.getContext();
-      status.push(lodash.isEmpty(ctx) ? "default" : ctx);
+      status.push("│", lodash.isEmpty(ctx) ? "default" : ctx);
       const cfg = cfgObj.getConfig();
       if (lodash.isObject(cfg)) {
         status.push(util.format(" - %s://%s:%s%s",
@@ -46,14 +46,15 @@ function TextUI (params) {
 
     if (lodash.isObject(mpfObj)) {
       const usage = mpfObj.stop();
-      status.push("\n", util.format("Time: %s - Memory: %s", usage.time_text, usage.memory_text));
+      status.push("\n");
+      status.push("│", util.format("Time: %s - Memory: %s", usage.time_text, usage.memory_text));
     }
 
     [
       "",
-      "------------------------------------------------------------------------------------",
+      "┌",
       status.join(""),
-      "",
+      "└",
     ].forEach(function(str) { console.info(str); });
   };
 

@@ -7,6 +7,9 @@
   "bin": {
     "devebot": "./bin/cli"
   },
+  "engines": {
+    "node": ">=12"
+  },
   "directories": {
     "lib": "lib/"
   },
@@ -49,7 +52,7 @@
     "bluebird": "3.7.2",
     "cli-table": "^0.3.11",
     "commander": "^9.5.0",
-    "devebot-api": "^0.2.2",
+    "devebot-api": "^0.4.0",
     "jsonschema": "^1.4.1",
     "lodash": "4.17.21",
     "userhome": "^1.0.0",
