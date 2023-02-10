@@ -9,7 +9,6 @@ const Config = require("./utils/config");
 const TextUI = require("./utils/textui");
 const Myperf = require("./utils/myperf");
 const logger = require("./utils/logger");
-const constx = require("./utils/constx");
 
 const ApiClient = require("@saola/api");
 
