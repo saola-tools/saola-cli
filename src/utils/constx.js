@@ -33,6 +33,15 @@ function getFrameworkName (packageName) {
     }
   }
   //
+  const normalNamePattern = /^(?<scope>[a-zA-Z]+)-(?<name>[a-zA-Z]{1}[a-zA-Z0-9-_]*)$/;
+  const match2 = packageName.match(normalNamePattern);
+  if (match2 && match2.groups) {
+    const scope = match2.groups["scope"];
+    if (isString(scope)) {
+      return scope;
+    }
+  }
+  //
   return packageName;
 };
 
