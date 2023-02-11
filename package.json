@@ -1,7 +1,7 @@
 {
   "name": "@saola/cli",
-  "version": "0.4.0",
-  "description": "SaolaJS Commandline Interface",
+  "version": "0.4.1",
+  "description": "Saola Command Line Interface",
   "main": "lib/client.js",
   "preferGlobal": true,
   "bin": {
@@ -38,14 +38,10 @@
   },
   "keywords": [
     "saola",
-    "cli"
+    "saola-cli"
   ],
-  "author": "SaolaJS",
+  "author": "Saola Development Team",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/saolajs/saola-cli/issues"
-  },
-  "homepage": "https://github.com/saolajs/saola-cli#readme",
   "dependencies": {
     "@saola/api": "^0.4.0",
     "app-root-path": "^3.1.0",
